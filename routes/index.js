@@ -23,6 +23,9 @@ router.get('/moldesEntreFecha',(req,res)=>{
 
 })
 router.get('/tornillos',(req,res)=>{
+  
+  let sql1 = 'SELECT distinct GIMA FROM contadoresInyeccion';
+  let sql2 = 'CALL tornillosMaquina(?,?)';
   res.render('tornillos');
 })
 module.exports = router;

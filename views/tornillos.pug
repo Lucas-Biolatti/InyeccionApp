@@ -39,15 +39,15 @@
           <div class="position-sticky pt-3">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
+                <a class="nav-link"  href="/">
                   <span data-feather="home"></span>
-                    | Dashboard
+                    | Moldes
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
+              <li class="nav-link">
+                <a class="nav-link active" aria-current="page" href="#">
                   <span data-feather="file"></span>
-                   |Orders
+                   |Tornillos
                 </a>
               </li>
               <li class="nav-item">
@@ -116,12 +116,7 @@
             <h1 class="h2">Inyección</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
               <div class="btn-group me-2">
-                label(class="form-label" for="fini") Desde
-                input(type="date", name="fini", class="form-control", id="fini")
-              
-                label(class="form-label") Hasta
-                input(type="date", name="ffin", class="form-control", id="ffin")
-                input(type="text", name="molde", placeholder="molde", id="molde")
+                
                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick="consultar()">
                   <span data-feather="search"></span>
                     |Consultar
@@ -146,11 +141,8 @@
                 th GOLPES ACUMULADOS
                 th ACCION
                 
-              tbody
-                td(id="maquina")
-                td(id="fcambio")
-                td(id="gacum")
-                td(id="")
+              tbody(id="tabla")
+                
               
          
         </main>
