@@ -22,4 +22,7 @@ router.get('/moldesEntreFecha',(req,res)=>{
   })
 
 })
+router.get('/tornillos',(req,res)=>{
+  res.render('tornillos');
+})
 module.exports = router;
