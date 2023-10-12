@@ -39,13 +39,13 @@
           <div class="position-sticky pt-3">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link"  href="/">
+                <a class="nav-link active" aria-current="page" href="#">
                   <span data-feather="home"></span>
                     | Moldes
                 </a>
               </li>
-              <li class="nav-link">
-                <a class="nav-link active" aria-current="page" href="#">
+              <li class="nav-item">
+                <a class="nav-link" href="/tornillos">
                   <span data-feather="file"></span>
                    |Tornillos
                 </a>
@@ -114,94 +114,11 @@
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Inyección</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-              <div class="btn-group me-2">
-                
-                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="consultar()">
-                  <span data-feather="search"></span>
-                    |Consultar
-                </button>
-                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="limpiar()">
-                  <span data-feather="refresh-cw"></span>
-                    |Limpiar
-                </button>
-              </div>
-              
-            </div>
-          </div>
 
-         
 
-          <h2>Seguimiento de Tornillos</h2>
-          div(class="table-responsive")
-            table(class="table table-striped table-sm")
-              thead 
-                
-                th MAQUINA
-                th FECHA DE CAMBIO
-                th GOLPES ACUMULADOS
-                th OBSERVACIONES
-                th ACCION
-                
-              tbody(id="tabla")
-                each resultado in resultados
-                  tr
-                    
-                    td= resultado.Gima
-                    td= resultado.ftornillo
-                    td= resultado.Golpes
-                    td= resultado.observaciones
-                    td
-                      button(type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal" data-fecha=resultado.ftornillo data-observaciones=resultado.observaciones data-gima=resultado.Gima) Editar
-         
-        </main>
-        <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
-          form(action="/editarTornillo" method="POST")
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="editarModalLabel">Editar Datos</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  
-                  input(type="text" id="campo3" class="form-control" name="gima")
-                  label(class="form-label") Fecha de Cambio
-                  <input type="date" id="campo1" class="form-control" name="fecha">
-                  label(class="form-label") Observaciones
-                  <input type="text" id="campo2" class="form-control" name="observaciones">
-                  
-                  
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                  <button type="submit" class="btn btn-primary" id="guardarCambios">Guardar Cambios</button>
-                </div>
-              </div>
-            </div>
-        </div>
-      </div>
-    </div>
-
+            
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" ></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="  crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="./javascripts/dashboard.js"></script>
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    
-    script.
-      feather.replace({ 'aria-hidden': 'true' })
-      $(document).ready(function () {
-        $('button[data-bs-toggle="modal"]').on('click', function () {
-          var fecha = $(this).data('fecha');
-          var observaciones = $(this).data('observaciones');
-          var gima = $(this).data('gima')
-
-          // Llena los campos del modal con los datos de la fila
-          $('#campo1').val(fecha);
-          $('#campo2').val(observaciones);
-          $('#campo3').val(gima);
-        });
-
-       
-      });

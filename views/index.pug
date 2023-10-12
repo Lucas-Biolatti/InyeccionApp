@@ -136,6 +136,7 @@
           </div>
 
           <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+          <canvas class="my-4 w-100" id="myChart2" width="900" height="380"></canvas>
 
           <h2>Resumen Entre Fechas</h2>
           div(class="table-responsive")
@@ -223,6 +224,41 @@
                       },
                       {
                         data: datos.map(e => 0.055),
+                        label:'Objetivo',
+                        lineTension: 0,
+                        backgroundColor: 'transparent',
+                        borderColor: '#990606',
+                        borderWidth: 4,
+                        pointBackgroundColor: '#007bff'
+                      }],
+                      
+                      
+                    },
+                    options: {
+                      
+                      legend: {
+                        display: false
+                      }
+                    },
+                        
+                  })
+              var ctx1 = document.getElementById('myChart2')
+              var myChart2 = new Chart(ctx1, {
+                    type: 'line',
+                    data: {
+                      labels: datos.map(e => fecha(e.FECHA)),
+                      
+                      datasets: [{
+                        data: datos.map(e => e.Golpes),
+                        label:'Golpes',
+                        lineTension: 0,
+                        backgroundColor: 'transparent',
+                        borderColor: '#007bff',
+                        borderWidth: 4,
+                        pointBackgroundColor: '#007bff'
+                      },
+                      {
+                        data: datos.map(e => 246),
                         label:'Objetivo',
                         lineTension: 0,
                         backgroundColor: 'transparent',
