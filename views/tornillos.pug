@@ -142,6 +142,16 @@
                 th ACCION
                 
               tbody(id="tabla")
+                each i in resultados 
+                  tr 
+                    td= i.Gima 
+                    td= i.ftornillo
+                    td= i.Golpes 
+                    td= i.observaciones
+                    td                      
+                        <a class="nav-link" href="#">
+                          <span data-feather="edit"></span>
+                          |Editar
                 
               
          

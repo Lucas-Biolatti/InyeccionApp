@@ -8,7 +8,7 @@ function fecha(x){
 }
 function fechabd(x){
   let f = new Date(x);
-  let mes= (f.getMonth()+1)
+  let mes= (f.getMonth())
   let fecha = `${f.getUTCFullYear()}-${mes}-${f.getDate()};`
   return fecha;
 }
@@ -32,18 +32,35 @@ router.get('/moldesEntreFecha',(req,res)=>{
   })
 
 })
-router.get('/tornillos',(req,res)=>{
+/*router.get('/tornillos',async (req,res)=>{
   
-  let sql1 = 'SELECT * FROM tornillosInyectoras';
-  let sql2 = `CALL tornillosMaquina("2023-08-01","Gima 02")`;
+  let sql1 = ['Gima 01,'];
   let resultado=[];
-  conexion.query(sql1,async(err,result)=> {
+   await conexion.query(sql1, (err,result)=> {
     
     if (!err) {
-      result.map(e =>{
+      for(let i=0;result.length;i++){
+        conexion.query(`CALL tornillosMaquina("${fechabd(result.ftornillo)}","${result.gima}")`,(error,result1)=>{
+          console.log(result1)
+          if(!error && result1[0][0].GIMA==result.gima){
+            let r={
+              Gima:result1[0][0].GIMA,
+              Golpes:result1[0][0].golpes,
+              ftornillo:fecha(result1[0][0].ftornillo),
+              observaciones:result1[0][0].observaciones
+            }
+            console.log(r);
+           resultado.push(r);
+           
+          }
+          
+          })
+      }
+
+       /*await result.map(e =>{
          
          conexion.query(`CALL tornillosMaquina("${fechabd(e.ftornillo)}","${e.gima}")`,(error,result1)=>{
-          
+        
           if(!error && result1[0][0].GIMA==e.gima){
             let r={
               Gima:result1[0][0].GIMA,
@@ -51,19 +68,62 @@ router.get('/tornillos',(req,res)=>{
               ftornillo:fecha(result1[0][0].ftornillo),
               observaciones:result1[0][0].observaciones
             }
-           console.log(r)
-         
+           resultado.push(r);
            
           }
           
-  })
-      })
-       await console.log(resultado)
-       await res.render('tornillos');
+          })
+      }
        
+       res.render('tornillos');
+       console.log(resultado)
+    })
+  })*/
+
+  router.get('/tornillos', async (req, res) => {
+    try {
+      const sql1 = 'SELECT * FROM tornillosInyectoras';
+      const result = await new Promise((resolve, reject) => {
+        conexion.query(sql1, (err, result) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+  
+      const promises = result.map((e) => {
+        return new Promise((resolve, reject) => {
+          conexion.query(`CALL tornillosMaquina("${fechabd(e.ftornillo)}", "${e.gima}")`, (error, result1) => {
+            if (!error && result1[0][0].GIMA == e.gima) {
+              let r = {
+                Gima: result1[0][0].GIMA,
+                Golpes: result1[0][0].golpes,
+                ftornillo: fecha(result1[0][0].ftornillo),
+                observaciones: result1[0][0].observaciones,
+              };
+  
+              resolve(r);
+            } else {
+              console.error(error);
+              resolve(null); // Resuelve con null en caso de error para que no rompa Promise.all
+            }
+          });
+        });
+      });
+  
+      // Usar Promise.all para esperar a que todas las promesas se resuelvan
+      const resultsArray = await Promise.all(promises);
+  
+      // Filtrar los resultados nulos y enviar solo los resultados válidos
+      const validResults = resultsArray.filter((result) => result !== null);
+  
+      res.render('tornillos',{resultados:validResults}); // Enviar los datos al cliente o hacer algo más con ellos
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error en la consulta');
     }
-  })
- 
- 
-})
+  });
 module.exports = router;
