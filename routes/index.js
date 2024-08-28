@@ -17,6 +17,9 @@ function fechabd(x){
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+router.get('/modelos', function(req, res, next) {
+  res.render('modelos', { title: 'Express' });
+});
 
 router.get('/moldesEntreFecha',(req,res)=>{
   let fini=req.query.fini;
@@ -25,6 +28,24 @@ router.get('/moldesEntreFecha',(req,res)=>{
 
   let sql = `CALL moldeEntreFecha('${fini}','${ffin}','${molde}')`
   conexion.query(sql,(err,result)=>{
+    
+    if (!err) {
+      res.send(result[0]);
+    }else{
+      console.log(err);
+    }
+  })
+
+})
+
+router.get('/modeloEntreFecha',(req,res)=>{
+  let fini=req.query.fini;
+  let ffin=req.query.ffin;
+  let molde=req.query.molde;
+
+  let sql = `CALL modeloEntreFecha('${fini}','${ffin}','${molde}')`
+  conexion.query(sql,(err,result)=>{
+    
     if (!err) {
       res.send(result[0]);
     }else{
